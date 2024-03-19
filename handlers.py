@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, FSInputFile
 
 import kb
 import text
@@ -16,3 +16,8 @@ async def start_handler(msg: Message):
 @router.message(F.text == "◀️ Выйти в меню")
 async def menu(msg: Message):
     await msg.answer(text.menu, reply_markup=kb.menu)
+
+@router.callback_query(F.data == "check_pictures")
+async def menu(msg: Message):
+    picture = FSInputFile('1.jpg')
+    await msg.answer_photo(photo=picture, reply_markup=kb.menu)  # ошибка
