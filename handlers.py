@@ -11,13 +11,16 @@ router = Router()
 async def start_handler(msg: Message):
     await msg.answer(text.greet.format(name=msg.from_user.full_name), reply_markup=kb.menu)
 
+
 @router.message(F.text == "Меню")
 @router.message(F.text == "Выйти в меню")
 @router.message(F.text == "◀️ Выйти в меню")
 async def menu(msg: Message):
     await msg.answer(text.menu, reply_markup=kb.menu)
 
+
 @router.callback_query(F.data == "check_pictures")
-async def menu(msg: Message):
+async def menu(clbck: CallbackQuery):
     picture = FSInputFile('1.jpg')
-    await msg.answer_photo(photo=picture, reply_markup=kb.menu)  # ошибка
+    await clbck.message.answer(text.gen_exit, reply_markup=kb.exit_kb)
+    # await msg.answer(photo=picture, text='Check pictures', reply_markup=kb.menu)  # ошибка
